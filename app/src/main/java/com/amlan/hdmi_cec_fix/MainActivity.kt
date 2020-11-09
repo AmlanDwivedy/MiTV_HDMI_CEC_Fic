@@ -26,13 +26,17 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        toggleHDMIAudio()
+
+    }
+
+    private fun toggleHDMIAudio() {
         runShellCommand(disconnectHDMI)
         Handler(Looper.getMainLooper()).postDelayed({
             runShellCommand(connectHDMI)
             Toast.makeText(applicationContext, "Set to HDMI audio", Toast.LENGTH_LONG).show()
             finish()
         }, 10000)
-
     }
 
     @Throws(Exception::class)
@@ -60,6 +64,8 @@ class MainActivity : Activity() {
                             -1
                         )
                     )
+
+                    toggleHDMIAudio()
                 }
             }
         }
