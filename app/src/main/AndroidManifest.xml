@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.amlan.hdmi_cec_fix">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,6 +13,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -22,8 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HDMICECFix">
         <service
-            android:name=".service.HDMIAudiChangeService"
-            android:exported="false"></service>
+            android:name=".work.HDMIAudiChangeService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"></service>
 
         <activity
             android:name=".MainActivity"
@@ -39,9 +40,11 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.amlan.hdmi_cec_fix.receiver.ServiceStarter">
+        <receiver android:name="com.amlan.hdmi_cec_fix.receiver.BootStartReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
 
