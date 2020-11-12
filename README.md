@@ -1,6 +1,6 @@
 # MiTV HDMI CEC Fix
 
-This is a fix for my Mi TV. When I connect my soundbar to the tv its not automatically not getting connected to HDMI ARC because of some platform issue.
+This is a fix for my Mi TV. When I connect my soundbar to the tv via HDMI ARC its not automatically not getting connected to Audio source because of some platform issue.
 Thats why I fixed the issue, without waiting for Mi to fix it.
 
 
