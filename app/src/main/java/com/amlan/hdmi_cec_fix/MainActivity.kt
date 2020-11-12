@@ -12,6 +12,8 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieCompositionFactory
 
 
 class MainActivity : Activity() {
@@ -20,12 +22,14 @@ class MainActivity : Activity() {
 
     private val disconnectHDMI = "settings put global hdmi_control_enabled 0"
     private val connectHDMI = "settings put global hdmi_control_enabled 1"
+    private lateinit var animView: LottieAnimationView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        animView = findViewById(R.id.animationView)
         toggleHDMIAudio()
 
     }
