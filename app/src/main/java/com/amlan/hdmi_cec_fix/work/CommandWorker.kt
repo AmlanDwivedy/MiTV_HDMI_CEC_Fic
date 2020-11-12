@@ -8,7 +8,8 @@ import android.widget.Toast
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 
-class CommandWorker(appContext: Context, workerParams: WorkerParameters) : Worker(appContext, workerParams) {
+class CommandWorker(appContext: Context, workerParams: WorkerParameters) :
+    Worker(appContext, workerParams) {
 
     private val disconnectHDMI = "settings put global hdmi_control_enabled 0"
     private val connectHDMI = "settings put global hdmi_control_enabled 1"
@@ -16,18 +17,28 @@ class CommandWorker(appContext: Context, workerParams: WorkerParameters) : Worke
 
     override fun doWork(): Result {
 
-        Log.e("amlan","work started ")
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(applicationContext, "command run started ", Toast.LENGTH_LONG).show()
+        }
+
+        Log.e("amlan", "work started ")
         runShellCommand(disconnectHDMI)
         Handler(Looper.getMainLooper()).postDelayed({
             runShellCommand(connectHDMI)
-            Toast.makeText(applicationContext, "Set to HDMI audio", Toast.LENGTH_LONG).show()
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(applicationContext, "Set to HDMI audio", Toast.LENGTH_LONG).show()
+            }
+
         }, 10000)
         return Result.success()
     }
 
-    @Throws(Exception::class)
+
     private fun runShellCommand(command: String) {
-        val process = Runtime.getRuntime().exec(command)
-        process.waitFor()
+        Handler(Looper.getMainLooper()).post {
+            val process = Runtime.getRuntime().exec(command)
+            val response = process.waitFor()
+            Log.e("amlan", "response: $response")
+        }
     }
 }
